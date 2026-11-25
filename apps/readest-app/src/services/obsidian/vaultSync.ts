@@ -1,7 +1,7 @@
 import * as CFI from 'foliate-js/epubcfi.js';
 import type { Book, BookNote } from '@/types/book';
 import type { AppService } from '@/types/system';
-import { buildAnnotationWebUrl } from '@/utils/deeplink';
+import { buildAnnotationUrl } from '@/utils/deeplink';
 import { makeSafeFilename } from '@/utils/misc';
 import { getCoverFilename } from '@/utils/book';
 import {
@@ -11,6 +11,9 @@ import {
   type VaultHighlight,
   type WrittenBlocks,
 } from './vaultNote';
+
+import { useSettingsStore } from '@/store/settingsStore';
+import type { ObsidianSettings } from '@/types/settings';
 
 /** Per device: which vault note holds the book, and what this device wrote into it. */
 interface VaultBookState {
@@ -69,6 +72,11 @@ const copyCover = async (appService: AppService, folder: string, book: Book) => 
   }
 };
 
+const obsidian = (): ObsidianSettings => {
+  const settings = useSettingsStore.getState().settings;
+  return settings.obsidian;
+};
+
 export const toVaultHighlights = (
   bookHash: string,
   notes: BookNote[],
@@ -83,7 +91,7 @@ export const toVaultHighlights = (
       note: note.note ?? '',
       color: note.color ?? 'yellow',
       chapter: chapterForNote(note),
-      url: buildAnnotationWebUrl({ bookHash, noteId: note.id, cfi: note.cfi }),
+      url: buildAnnotationUrl({ bookHash, noteId: note.id, cfi: note.cfi }, obsidian().linkType),
       createdAt: note.createdAt,
       deleted: !!note.deletedAt || !note.text,
     }));

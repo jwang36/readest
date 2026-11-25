@@ -14,6 +14,7 @@ import type { CoverSearchEngine } from '@/services/metadata/coverSearch';
 import type { NotebookTab } from '@/store/notebookStore';
 import type { DictionarySettings, ImportedDictionary } from '@/services/dictionaries/types';
 import type { AnkiProfileSettings } from '@/services/vocabulary/types';
+import type { AnnotationLinkType } from '@/utils/deeplink';
 
 export type ThemeType = 'light' | 'dark' | 'auto';
 export type LibraryViewModeType = 'grid' | 'list';
@@ -262,6 +263,7 @@ export interface ObsidianSettings {
   enabled: boolean;
   /** Absolute path of the vault folder the book notes go into. */
   folder: string;
+  linkType: AnnotationLinkType;
 }
 
 /**

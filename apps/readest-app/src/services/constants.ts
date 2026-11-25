@@ -166,6 +166,7 @@ export const DEFAULT_NOTION_SETTINGS = {
 export const DEFAULT_OBSIDIAN_SETTINGS: ObsidianSettings = {
   enabled: false,
   folder: '',
+  linkType: 'app',
 };
 
 export const DEFAULT_WEBDAV_SETTINGS = {

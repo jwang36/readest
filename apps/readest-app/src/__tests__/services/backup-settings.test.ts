@@ -167,7 +167,7 @@ describe('sanitizeSettingsForBackup - blacklist', () => {
   it('strips the per-device Obsidian vault settings', () => {
     const out = rec(
       sanitizeSettingsForBackup(
-        makeSettings({ obsidian: { enabled: true, folder: '/Users/me/Vault/Readest' } }),
+        makeSettings({ obsidian: { enabled: true, folder: '/Users/me/Vault/Readest', linkType: 'web' } }),
       ),
     );
     expect(out['obsidian']).toBeUndefined();
