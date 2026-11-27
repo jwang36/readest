@@ -5,7 +5,8 @@ import { useSettingsStore } from '@/store/settingsStore';
 import type { ObsidianSettings } from '@/types/settings';
 import { requestStoragePermission } from '@/utils/permission';
 import SubPageHeader from '../SubPageHeader';
-import { BoxedList, SettingsRow, SettingsSwitchRow, Tips } from '../primitives';
+import { BoxedList, SettingsRow, SettingsSelect, SettingsSwitchRow, Tips } from '../primitives';
+import { AnnotationLinkType } from '@/utils/deeplink';
 
 interface ObsidianFormProps {
   onBack: () => void;
@@ -60,6 +61,19 @@ const ObsidianForm: React.FC<ObsidianFormProps> = ({ onBack }) => {
             disabled={!obsidian?.folder}
             onChange={() => save({ enabled: !obsidian?.enabled })}
           />
+          <SettingsRow label={_('Annotation Link')}>
+            <SettingsSelect
+              value={obsidian?.linkType}
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                save({ linkType: e.target.value as AnnotationLinkType })
+              }
+              ariaLabel={_('Annotation Link')}
+              options={[
+                { value: 'app', label: _('App Link') },
+                { value: 'web', label: _('Web Link') },
+              ]}
+            />
+          </SettingsRow>
         </BoxedList>
         <Tips>
           <li>{_('Choose a folder inside your vault, such as Readest.')}</li>
